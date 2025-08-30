@@ -1,10 +1,12 @@
+import type { ReactNode } from "react";
+
 import {
   Brain, Cpu, Bot, Boxes, Box, Database, Cloud, Layers, FlaskConical,
   Server, Network, GitBranch, Activity, Wand2, Binary, Terminal,
-  Sparkles, FileSearch, ShieldCheck, BookText, Rocket
+  FileSearch, ShieldCheck, BookText, Rocket
 } from "lucide-react";
 
-type Skill = { name: string; icon: JSX.Element };
+type Skill = { name: string; icon: ReactNode };
 type Group = { title: string; items: Skill[] };
 
 const groups: Group[] = [
@@ -92,6 +94,7 @@ export default function Tech() {
         ))}
       </div>
 
+      
     </section>
   );
 }
