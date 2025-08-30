@@ -1,26 +1,128 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* smooth anchor scrolling everywhere */
+html { scroll-behavior: smooth; }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0f19;
+  --card: #0f1629;
+  --muted: #9fb3c6; /* slightly brighter for readability */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body { height: 100%; }
+body { background: var(--bg); color: white; }
+
+/* helpers */
+.section { @apply max-w-6xl mx-auto px-5 md:px-8 py-16 md:py-24; }
+.h2 { @apply text-3xl md:text-4xl font-semibold tracking-tight; }
+.p { @apply text-base md:text-lg; color: var(--muted); }
+/* feature cards: consistent look + equal height */
+.feature-card {
+  @apply rounded-2xl bg-white/5 border border-white/10 shadow-lg p-6 md:p-7 flex flex-col h-full min-h-[220px];
+}
+.feature-card__icon {
+  @apply w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/90;
+}
+/* --- Buttons --- */
+.btn-base {
+  @apply inline-flex items-center justify-center gap-2 rounded-full
+         px-6 py-3 font-medium transition shadow-lg;
+}
+.btn-focus {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0
+         focus-visible:ring-white/70;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Primary (Resume) */
+.btn-primary {
+  @apply btn-base text-white bg-gradient-to-r from-indigo-500 to-sky-500
+         hover:from-indigo-400 hover:to-sky-400 ring-1 ring-white/10;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Glass (View My Work) */
+.btn-glass {
+  @apply btn-base text-white/90 bg-white/10 hover:bg-white/20
+         border border-white/20 backdrop-blur-md;
 }
+
+/* Accent (Contact Me) */
+.btn-accent {
+  @apply btn-base text-slate-900
+         bg-gradient-to-r from-amber-300 to-amber-400
+         hover:from-amber-200 hover:to-amber-300
+         ring-1 ring-amber-200/60;
+}
+
+.feature-card__title { @apply mt-3 font-semibold; }
+.feature-card__text  { @apply p mt-1; }
+/* Square feature cards (same style as feature-card, but perfectly square) */
+.feature-square {
+  @apply rounded-2xl bg-white/5 border border-white/10 shadow-lg
+         p-6 md:p-7 flex flex-col justify-start aspect-square min-h-0;
+}
+/* ——— Skills styling ——— */
+.skill-card { @apply card p-6 md:p-8; }
+
+.skill-title { @apply font-semibold text-amber-300; }
+
+.skill-pill {
+  @apply inline-flex items-center gap-2 rounded-xl
+         border border-amber-400/30 bg-amber-400/10
+         text-amber-100 px-3.5 py-2 text-sm;
+}
+.skill-pill .icon { @apply w-4 h-4 text-amber-300; }
+
+.feature-card__icon { @apply w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/90; }
+.feature-card__title { @apply mt-3 font-semibold; }
+.feature-card__text  { @apply p mt-1; }
+/* Equal-height feature tiles (clean, no overflow) */
+.feature-tile {
+  @apply rounded-2xl bg-white/5 border border-white/10 shadow-lg
+         p-6 md:p-7 flex flex-col h-full min-h-[260px]; /* tweak height if you want */
+}
+.feature-card__icon { @apply w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/90; }
+.feature-card__title { @apply mt-3 font-semibold text-base; }
+.feature-card__text  { @apply text-sm leading-relaxed text-[var(--muted)] mt-2; }
+
+/* Optional: soft text clamp so tiles stay tidy (no plugin needed) */
+.clamp-6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* extra: subtle text glow for light-on-gradient areas */
+.text-glow { text-shadow: 0 2px 6px rgba(0,0,0,.35); }
+
+/* card / button (as before) */
+.card {
+  @apply rounded-2xl backdrop-blur shadow-lg;
+  background-color: rgba(15, 22, 41, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.btn { @apply inline-flex items-center gap-2 rounded-xl px-5 py-3 transition; background-color: #2563eb; }
+.btn:hover { background-color: #1e40af; }
+
+/* <<< NEW: centered scroll cue for every section >>> */
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 18px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(255,255,255,.9);
+}
+.scroll-cue .chev { font-size: 22px; line-height: 1; transition: transform .18s ease; }
+.scroll-cue:hover .chev { transform: translateY(3px); }
+
+/* when used on dark sections (non-hero), keep it slightly dimmer */
+.scroll-cue--dark { color: rgba(255,255,255,.75); }
+
+/* make anchor jumps stop below the navbar */
+.scroll-mt { scroll-margin-top: 96px; }
